@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="mapscaleview-1.2.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/ea8de57add3e98701d0dd4614fce23899f39d976/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/ea8de57add3e98701d0dd4614fce23899f39d976/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.pengrad/mapscaleview/1.2.1/348069efae567fad225768cf943812b64e0df11c/mapscaleview-1.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

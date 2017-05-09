@@ -1,0 +1,11 @@
+<android.support.v7.widget.Toolbar android:id="@+id/toolbarDefault"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimaryDark"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KALAMPOKI"/>
+    </android.support.v7.widget.Toolbar>

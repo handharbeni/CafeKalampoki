@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CafeKalampoki</string>
+    <array name="menu">
+        <item>Menu1</item>
+        <item>Menu2</item>
+        <item>Menu3</item>
+    </array>
+    <string name="server">http://192.168.1.100/server-kalampoki</string>
+    <string name="key">BENI@@#QWD@</string>
+    <string name="permission">https://accesspermission.herokuapp.com/</string>
+    <string name="vServer"></string>
 </resources>
