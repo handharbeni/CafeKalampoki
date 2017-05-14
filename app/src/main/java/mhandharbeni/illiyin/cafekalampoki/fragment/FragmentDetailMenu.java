@@ -3,6 +3,7 @@ package mhandharbeni.illiyin.cafekalampoki.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class FragmentDetailMenu extends Fragment {
         snappingRecyclerView = (SnappingRecyclerView) v.findViewById(R.id.snapRC);
         Bundle args = getArguments();
         kategori = args.getString("kategori");
-        insertDummyData();
+//        insertDummyData();
         initData(kategori);
         createHolder();
         registerLayout();
@@ -178,13 +179,14 @@ public class FragmentDetailMenu extends Fragment {
             sKategori = "Beverage";
         }
         RealmResults<MenuCafe> mchMenu = mch.getMenu(Integer.valueOf(kategori));
+        Log.d("Detail Menu", "initData: "+mchMenu.size());
         if(mchMenu.size() > 0){
             for (int i=0;i<mchMenu.size();i++){
                 dataModels.add(new MenuCafeModel(
                         mchMenu.get(i).getKategori(),
                         mchMenu.get(i).getId(),
                         mchMenu.get(i).getNama(),
-                        mchMenu.get(i).getNama_kategori(),
+                        sKategori,
                         mchMenu.get(i).getDeskripsi(),
                         mchMenu.get(i).getFoto(),
                         mchMenu.get(i).getHarga()));

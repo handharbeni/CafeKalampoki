@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.pddstudio.preferences.encrypted.EncryptedPreferences;
 import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
@@ -52,20 +53,22 @@ public class MagzService extends IntentService implements ConnectivityChangeList
         client = new HttPizza();
         //httppizza
         mgHelper = new MagzHelper(getApplicationContext());
-        endUri = getString(R.string.server)+"/"+getString(R.string.vServer)+"//getMagz.php";
+        endUri = getString(R.string.server)+"/"+getString(R.string.vServer)+"/getMagz.php";
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase("1")){
+        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
+            Log.d("MAGZ SERVICE", "onHandleIntent: MAGZ SERVICE RUNNING");
             sycnMagz();
+            stopSelf();
         }
     }
     public void sycnMagz(){
         checkPermission();
         if (encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")){
-            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase("1")){
+            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
                 /*NETWORK AVAILABLE*/
                 Request request = client.newRequest()
                         .url(endUri)
@@ -81,7 +84,9 @@ public class MagzService extends IntentService implements ConnectivityChangeList
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    if (mgHelper.checkDuplicate(object.getInt("id"))){
+                                    Log.d("MAGZ SERVICE", "onResponse: "+mgHelper.checkDuplicate(object.getInt("id")));
+                                    if (!mgHelper.checkDuplicate(object.getInt("id"))){
+                                        Log.d("MAGZ SERVICE", "onResponses: "+object.getInt("id"));
                                         Magz magz = new Magz();
                                         magz.setId(object.getInt("id"));
                                         magz.setJudul(object.getString("judul"));
@@ -92,9 +97,7 @@ public class MagzService extends IntentService implements ConnectivityChangeList
                                     }
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -128,9 +131,7 @@ public class MagzService extends IntentService implements ConnectivityChangeList
                                 .putString("ALLOWED", "1")
                                 .apply();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
             }

@@ -55,4 +55,6 @@ dependencies {
     }
     compile 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
     compile 'com.google.android.gms:play-services-maps:10.2.4'
+    compile 'com.github.pengrad:mapscaleview:1.2.1'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
 }

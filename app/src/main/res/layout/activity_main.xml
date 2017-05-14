@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -27,11 +27,12 @@
             android:layout_height="match_parent">
 
             <FrameLayout
+                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/FrameContainer">
             </FrameLayout>
         </FrameLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

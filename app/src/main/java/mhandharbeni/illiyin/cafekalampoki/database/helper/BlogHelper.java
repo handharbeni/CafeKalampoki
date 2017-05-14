@@ -1,6 +1,7 @@
 package mhandharbeni.illiyin.cafekalampoki.database.helper;
 
 import android.content.Context;
+import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -40,8 +41,8 @@ public class BlogHelper {
         bl.setId(blog.getId());
         bl.setJudul(blog.getJudul());
         bl.setIsi(blog.getIsi());
-        bl.setFoto(bl.getFoto());
-        bl.setTanggal(bl.getTanggal());
+        bl.setFoto(blog.getFoto());
+        bl.setTanggal(blog.getTanggal());
         realm.beginTransaction();
         realm.copyToRealm(bl);
         realm.commitTransaction();

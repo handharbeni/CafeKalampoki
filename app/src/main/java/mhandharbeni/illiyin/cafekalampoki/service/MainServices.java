@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import mhandharbeni.illiyin.cafekalampoki.MainActivity;
 import mhandharbeni.illiyin.cafekalampoki.service.intentService.BlogService;
+import mhandharbeni.illiyin.cafekalampoki.service.intentService.DetailMagzService;
 import mhandharbeni.illiyin.cafekalampoki.service.intentService.MagzService;
 import mhandharbeni.illiyin.cafekalampoki.service.intentService.MenuCafeService;
 import mhandharbeni.illiyin.cafekalampoki.service.intentService.ToolService;
@@ -21,7 +22,7 @@ import mhandharbeni.illiyin.cafekalampoki.service.intentService.ToolService;
 
 public class MainServices extends Service{
     public static Boolean serviceRunning = false;
-    public static final long NOTIFY_INTERVAL = 10 * 1000;
+    public static final long NOTIFY_INTERVAL = 1 * 1000;
     private Handler handler = new Handler();
     private Timer timer = null;
     public static final String
@@ -59,9 +60,14 @@ public class MainServices extends Service{
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    /*MENU SYNCING*/
+                    Intent menuCafe = new Intent(getApplicationContext(), MenuCafeService.class);
+                    startService(menuCafe);
+                    /*MENU SYNCING*/
+
                     /*TOOL APPLICATION*/
-                    Intent tool = new Intent(getApplicationContext(), ToolService.class);
-                    startService(tool);
+/*                    Intent tool = new Intent(getApplicationContext(), ToolService.class);
+                    startService(tool);*/
                     /*TOOL APPLICATION*/
 
                     /*BLOG SYNCING*/
@@ -74,10 +80,11 @@ public class MainServices extends Service{
                     startService(magz);
                     /*MAGZ SYNCING*/
 
-                    /*MENU SYNCING*/
-                    Intent menuCafe = new Intent(getApplicationContext(), MenuCafeService.class);
-                    startService(menuCafe);
-                    /*MENU SYNCING*/
+                    /*DETAIL MAGZ SYNCING*/
+                    Intent detailMagz = new Intent(getApplicationContext(), DetailMagzService.class);
+                    startService(detailMagz);
+                    /*DETAIL MAGZ SYNCING*/
+
                 }
             });
         }

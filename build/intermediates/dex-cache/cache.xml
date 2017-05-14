@@ -21,6 +21,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/root/.android/build-cache/39755d6e0744e0786b4ecc0b6f42fb3d8f9c54f4/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="21c0f1b0de29bfe601028757c5cb125c343f5164">
+        <dex dex="/home/mhandharbeni/Documents/AndroidProject/CafeKalampoki/app/build/intermediates/pre-dexed/debug/classes_cff9a8b7b8cb3bac9f6be875aef702711dcc3a0a.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/root/.android/build-cache/6345e8ee48c2e62acb4d79992623f9b63b503f33/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"

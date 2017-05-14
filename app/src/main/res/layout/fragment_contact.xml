@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/accent"
+    android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="5000dp">
 
         <TextView
             android:id="@+id/textView5"
@@ -15,7 +17,7 @@
             android:layout_marginEnd="46dp"
             android:layout_marginRight="46dp"
             android:layout_marginTop="33dp"
-            android:text="TextView" />
+            android:text="Keep in Touch" />
 
         <TextView
             android:id="@+id/textView6"
@@ -24,25 +26,32 @@
             android:layout_alignLeft="@+id/textView5"
             android:layout_alignStart="@+id/textView5"
             android:layout_below="@+id/textView5"
-            android:text="TextView" />
+            android:text="with us" />
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView6"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="115dp"
-            android:text="TextView" />
+            android:text="'in case, if you need to quay"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView7"
-            android:layout_alignStart="@+id/textView7"
             android:layout_below="@+id/textView7"
-            android:text="TextView" />
+            android:text="or maybe you wanna ask something, just call us'"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/textView9"
@@ -54,7 +63,7 @@
             android:layout_marginLeft="42dp"
             android:layout_marginStart="42dp"
             android:layout_marginTop="136dp"
-            android:text="TextView" />
+            android:text="Come quay" />
 
         <TextView
             android:id="@+id/textView10"
@@ -63,7 +72,7 @@
             android:layout_alignLeft="@+id/textView9"
             android:layout_alignStart="@+id/textView9"
             android:layout_below="@+id/textView9"
-            android:text="TextView" />
+            android:text="to" />
 
         <TextView
             android:id="@+id/textView11"
@@ -72,33 +81,93 @@
             android:layout_alignLeft="@+id/textView10"
             android:layout_alignStart="@+id/textView10"
             android:layout_below="@+id/textView10"
-            android:text="TextView" />
+            android:text="Jl. Bukit Barisan 12, Malang, East Java" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="/open everyday/"
+            android:layout_below="@+id/textView11"
             android:layout_alignLeft="@+id/textView11"
             android:layout_alignStart="@+id/textView11"
-            android:layout_below="@+id/textView11"
-            android:text="TextView" />
+            android:layout_marginTop="14dp" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView12"
-            android:layout_alignStart="@+id/textView12"
+            android:text="10.00 - 24.00"
             android:layout_below="@+id/textView12"
-            android:layout_marginTop="40dp"
-            android:text="TextView" />
+            android:layout_alignLeft="@+id/textView12"
+            android:layout_alignStart="@+id/textView12" />
 
-        <com.google.android.gms.maps.MapView
+        <com.github.pengrad.mapscaleview.MapScaleView
             android:id="@+id/mapView2"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_below="@+id/textView13"
-            android:layout_toRightOf="@+id/textView13"
-            android:layout_toEndOf="@+id/textView13" />
+            android:layout_marginTop="50dp"
+            android:layout_alignLeft="@+id/textView13"
+            android:layout_alignStart="@+id/textView13"
+            android:layout_alignRight="@+id/textView5"
+            android:layout_alignEnd="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView13"
+            android:layout_alignStart="@+id/textView13"
+            android:layout_below="@+id/mapView2"
+            android:layout_marginTop="71dp"
+            android:text="Social Media" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView16"
+            android:layout_alignStart="@+id/textView16"
+            android:layout_below="@+id/textView16"
+            android:layout_marginTop="23dp"
+            android:text="@string/phone" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView17"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_below="@+id/textView17"
+            android:text="@string/fb" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView18"
+            android:layout_alignStart="@+id/textView18"
+            android:layout_below="@+id/textView18"
+            android:text="@string/twitter" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView19"
+            android:layout_alignStart="@+id/textView19"
+            android:layout_below="@+id/textView19"
+            android:text="@string/instagram" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView20"
+            android:layout_alignStart="@+id/textView20"
+            android:layout_below="@+id/textView20"
+            android:text="@string/line" />
+
     </RelativeLayout>
 </ScrollView>

@@ -62,6 +62,12 @@ public class OrderHelper {
         }
     }
 
+    public void deleteData(int id) {
+        RealmResults<Order> dataDesults = realm.where(Order.class).equalTo("id", id).findAll();
+        realm.beginTransaction();
+        dataDesults.deleteFromRealm(0);
+        realm.commitTransaction();
+    }
     public void deleteData() {
         RealmResults<Order> dataDesults = realm.where(Order.class).findAll();
         realm.beginTransaction();

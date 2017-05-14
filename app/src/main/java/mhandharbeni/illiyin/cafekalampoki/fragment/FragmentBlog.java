@@ -2,6 +2,7 @@ package mhandharbeni.illiyin.cafekalampoki.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,11 @@ import com.master.simplerrecyclerviewadapter.SimplerRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import io.realm.RealmResults;
 import mhandharbeni.illiyin.cafekalampoki.R;
 import mhandharbeni.illiyin.cafekalampoki.adapter.model.BlogModel;
+import mhandharbeni.illiyin.cafekalampoki.database.Blog;
+import mhandharbeni.illiyin.cafekalampoki.database.helper.BlogHelper;
 
 /**
  * Created by root on 30/04/17.
@@ -29,10 +33,12 @@ public class FragmentBlog  extends Fragment {
     SimplerRecyclerViewAdapter adapter;
     View v;
     String kategori;
+    BlogHelper bHelper;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        bHelper = new BlogHelper(getActivity().getApplicationContext());
         v = inflater.inflate(R.layout.fragmet_blog, container, false);
         snappingRecyclerView = (SnappingRecyclerView) v.findViewById(R.id.snapRC);
         Bundle args = getArguments();
@@ -113,59 +119,29 @@ public class FragmentBlog  extends Fragment {
         snappingRecyclerView.setAdapter(adapter);
     }
     public void initData(String kategori){
+        String sKategori = "HAPPENING";
         if (kategori.equalsIgnoreCase("1")){
             /*HAPPENING*/
-            dataModels= new ArrayList<>();
-            dataModels.add(new BlogModel(
-                    1,
-                    1,
-                    "TEST1",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "HAPPENING",
-                    "2017-05-01"));
-            dataModels.add(new BlogModel(
-                    1,
-                    2,
-                    "TEST2",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "HAPPENING",
-                    "2017-05-01"));
-            dataModels.add(new BlogModel(
-                    1,
-                    3,
-                    "TEST3",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "HAPPENING",
-                    "2017-05-01"));
+            sKategori = "HAPPENING";
         }else if(kategori.equalsIgnoreCase("2")){
-            dataModels= new ArrayList<>();
-            dataModels.add(new BlogModel(
-                    2,
-                    1,
-                    "TEST1",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "INSIDE",
-                    "2017-05-01"));
-            dataModels.add(new BlogModel(
-                    2,
-                    2,
-                    "TEST2",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "INSIDE",
-                    "2017-05-01"));
-            dataModels.add(new BlogModel(
-                    2,
-                    3,
-                    "TEST3",
-                    "TEST ISI",
-                    "http://bolindonews.com/wp-content/uploads/2016/02/logoarema_bolindo.png",
-                    "INSIDE",
-                    "2017-05-01"));
+            /*INSIDE*/
+            sKategori = "INSIDE";
+        }
+        RealmResults<Blog> resultBlog = bHelper.getBlog(Integer.valueOf(kategori));
+        Log.d("FRAGMENT BLOG", "initData: "+resultBlog.size());
+        dataModels= new ArrayList<>();
+        if (resultBlog.size() > 0){
+            for (int i=0;i<resultBlog.size();i++){
+                Log.d("FRAGMENT BLOG", "initData: "+resultBlog.get(i).getFoto());
+                dataModels.add(new BlogModel(
+                        Integer.valueOf(kategori),
+                        resultBlog.get(i).getId(),
+                        resultBlog.get(i).getJudul(),
+                        resultBlog.get(i).getIsi(),
+                        resultBlog.get(i).getFoto(),
+                        sKategori,
+                        resultBlog.get(i).getTanggal()));
+            }
         }
     }
 }

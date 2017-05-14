@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!MainServices.serviceRunning){
+            Intent i = new Intent(this, MainServices.class);
+            startService(i);
+        }
 
         if(savedInstanceState != null){
             ConnectionBuddy.getInstance().clearNetworkCache(this, savedInstanceState);
@@ -316,7 +320,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
     public void initSideBar(){
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
-                .withSliderBackgroundColor(getResources().getColor(android.R.color.darker_gray))
                 .withRootView(R.id.drawer_layout)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
@@ -328,6 +331,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
                 .build();
         RealmResults<Menu> mHelpers = mh.getMenu();
         if(mHelpers.size() > 0){
+            PrimaryDrawerItem items = new PrimaryDrawerItem()
+                    .withIdentifier(100)
+                    .withName("")
+                    .withTag(100);
+            result.addItem(items);
             for (int i=0;i<mHelpers.size();i++){
                 PrimaryDrawerItem item = new PrimaryDrawerItem()
                         .withIdentifier(i)

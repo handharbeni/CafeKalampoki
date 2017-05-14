@@ -9,4 +9,10 @@
     <string name="key">BENI@@#QWD@</string>
     <string name="permission">https://accesspermission.herokuapp.com/</string>
     <string name="vServer"></string>
+    <string name="phone">+628123462662</string>
+    <string name="fb">Kalampoki Quayhouse</string>
+    <string name="twitter">/@kalampokihouse</string>
+    <string name="instagram">/@kalampokihouse</string>
+    <string name="line">/@fae1663v</string>
+    <string name="state_connection">0</string>
 </resources>

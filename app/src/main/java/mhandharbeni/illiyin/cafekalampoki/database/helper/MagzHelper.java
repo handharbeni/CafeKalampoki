@@ -45,7 +45,7 @@ public class MagzHelper {
         realm.commitTransaction();
     }
 
-    public RealmResults<Magz> getBlog(int kategori) {
+    public RealmResults<Magz> getMagz() {
         realmResult = realm.where(Magz.class).findAll();
         return realmResult;
     }

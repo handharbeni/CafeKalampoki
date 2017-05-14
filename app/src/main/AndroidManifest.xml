@@ -17,6 +17,7 @@
         <service android:name=".service.intentService.MenuCafeService"/>
         <service android:name=".service.intentService.MagzService"/>
         <service android:name=".service.intentService.BlogService"/>
+        <service android:name=".service.intentService.DetailMagzService"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

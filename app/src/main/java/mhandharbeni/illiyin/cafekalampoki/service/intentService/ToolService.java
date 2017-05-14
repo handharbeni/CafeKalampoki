@@ -17,8 +17,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 import mhandharbeni.illiyin.cafekalampoki.R;
+import mhandharbeni.illiyin.cafekalampoki.database.Magz;
 import mhandharbeni.illiyin.cafekalampoki.database.Menu;
 import mhandharbeni.illiyin.cafekalampoki.database.VersiDB;
 import mhandharbeni.illiyin.cafekalampoki.database.helper.MenuHelper;
@@ -47,7 +49,7 @@ public class ToolService extends IntentService implements ConnectivityChangeList
     }
 
     @Override
-    public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
         //init encrypting
         encryptedPreferences = new EncryptedPreferences.Builder(getBaseContext()).withEncryptionPassword(getString(R.string.key)).build();
@@ -65,16 +67,21 @@ public class ToolService extends IntentService implements ConnectivityChangeList
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase("1")){
+    protected void onHandleIntent(Intent intent) {
+        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
             initDB();
+            stopSelf();
         }
     }
     public void initDB(){
         checkPermission();
         if(encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")) {
-            final RealmResults<VersiDB> versiDB = vDB.getVersi();
-            if(versiDB.size() > 0){
+            final Realm realmss = Realm.getDefaultInstance();
+            RealmResults<VersiDB> versiDBs =
+                    realmss.where(VersiDB.class).equalTo("id",1).findAll();
+            Log.d("INIT DB", "initDB: "+versiDBs.size());
+            if(versiDBs.size() > 0){
+                final String versiDbx = versiDBs.get(0).getVersi();
                 // check update
                 Request request = client.newRequest()
                         .url(getResources().getString(R.string.server)+"/getVersiDB.php")
@@ -87,20 +94,17 @@ public class ToolService extends IntentService implements ConnectivityChangeList
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             String status = jsonObject.getString("status");
                             if(status.equalsIgnoreCase("1")){
-                                String versi = versiDB.get(0).getVersi();
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 JSONObject jsonObjectArray = jsonArray.getJSONObject(0);
                                 String newVersi = jsonObjectArray.getString("versi");
-                                if(!versi.equalsIgnoreCase(newVersi)){
+                                if(!versiDbx.equalsIgnoreCase(newVersi)){
                                     vDB.UpdateVersi(1, newVersi);
                                     updateMenu();
                                 }
                             }
                             // init menu
                             initMenu();
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
-                        } catch (IOException e1) {
+                        } catch (JSONException | IOException e1) {
                             e1.printStackTrace();
                         }
                     }
@@ -149,6 +153,7 @@ public class ToolService extends IntentService implements ConnectivityChangeList
                     }
                 });
             }
+            realmss.close();
         }else{
         }
     }
@@ -170,7 +175,6 @@ public class ToolService extends IntentService implements ConnectivityChangeList
                             for (int i =0; i<jsonArray.length();i++){
                                 JSONObject objectMenu = jsonArray.getJSONObject(i);
                                 String menu = objectMenu.getString("menu");
-                                Log.d("menuInit", "new onResponse: "+menu);
                                 Menu mnNew = new Menu();
                                 mnNew.setId(i);
                                 mnNew.setNama(menu);

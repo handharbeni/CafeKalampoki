@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.pddstudio.preferences.encrypted.EncryptedPreferences;
 import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
@@ -59,15 +60,16 @@ public class BlogService extends IntentService implements ConnectivityChangeList
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase("1")){
+        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
             syncHappening();
             syncInside();
+            stopSelf();
         }
     }
     public void syncHappening(){
         checkPermission();
         if (encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")){
-            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase("1")){
+            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
                 /*NETWORK AVAILABLE*/
                 Request request = client.newRequest()
                         .url(endUriHappening)
@@ -83,7 +85,7 @@ public class BlogService extends IntentService implements ConnectivityChangeList
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    if (bHelper.checkDuplicate(object.getInt("id"))){
+                                    if (!bHelper.checkDuplicate(object.getInt("id"))){
                                         Blog blog = new Blog();
                                         blog.setKategori(1);
                                         blog.setId(Integer.valueOf(object.getString("id")));
@@ -96,9 +98,7 @@ public class BlogService extends IntentService implements ConnectivityChangeList
                                     }
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -114,7 +114,7 @@ public class BlogService extends IntentService implements ConnectivityChangeList
     public void syncInside(){
         checkPermission();
         if (encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")){
-            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase("1")){
+            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
                 /*NETWORK AVAILABLE*/
                 Request request = client.newRequest()
                         .url(endUriInside)
@@ -130,7 +130,8 @@ public class BlogService extends IntentService implements ConnectivityChangeList
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    if (bHelper.checkDuplicate(object.getInt("id"))){
+                                    Log.d("BLOG SERVICE", "initData: "+object.getString("foto"));
+                                    if (!bHelper.checkDuplicate(object.getInt("id"))){
                                         Blog blog = new Blog();
                                         blog.setKategori(2);
                                         blog.setId(Integer.valueOf(object.getString("id")));
@@ -143,9 +144,7 @@ public class BlogService extends IntentService implements ConnectivityChangeList
                                     }
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }

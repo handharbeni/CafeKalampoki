@@ -3,7 +3,7 @@ package mhandharbeni.illiyin.cafekalampoki.service.intentService;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.StrictMode;
-import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.pddstudio.preferences.encrypted.EncryptedPreferences;
 import com.zplesac.connectionbuddy.interfaces.ConnectivityChangeListener;
@@ -42,7 +42,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        Log.d("Menu Cafe Service", "onStartCommand: ");
         //init encrypting
         encryptedPreferences = new EncryptedPreferences.Builder(getBaseContext()).withEncryptionPassword(getString(R.string.key)).build();
         //init encrypting
@@ -58,16 +58,16 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase("1")){
+    protected void onHandleIntent(Intent intent) {
+        if (encryptedPreferences.getString("NETWORK","0").equalsIgnoreCase(getResources().getString(R.string.state_connection))){
             syncBaverage();
             syncFood();
+            stopSelf();
         }
     }
     public void syncBaverage(){
         checkPermission();
         if (encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")){
-            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase("1")){
                 /*NETWORK AVAILABLE*/
                 Request request = client.newRequest()
                         .url(endUriBaverage)
@@ -83,7 +83,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    if (mcHelper.checkDuplicate(object.getInt("id"))){
+                                    if (!mcHelper.checkDuplicate(object.getInt("id"))){
                                         MenuCafe menuCafe = new MenuCafe();
                                         menuCafe.setKategori(2);
                                         menuCafe.setId(object.getInt("id"));
@@ -95,9 +95,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
                                     }
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -107,13 +105,12 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
 
                     }
                 });
-            }
+
         }
     }
     public void syncFood(){
         checkPermission();
         if (encryptedPreferences.getString("ALLOWED", "0").equalsIgnoreCase("0")){
-            if (encryptedPreferences.getString("NETWORK", "0").equalsIgnoreCase("1")){
                 /*NETWORK AVAILABLE*/
                 Request request = client.newRequest()
                         .url(endUriFood)
@@ -129,7 +126,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
                                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i=0;i<jsonArray.length();i++){
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    if (mcHelper.checkDuplicate(object.getInt("id"))){
+                                    if (!mcHelper.checkDuplicate(object.getInt("id"))){
                                         MenuCafe menuCafe = new MenuCafe();
                                         menuCafe.setKategori(1);
                                         menuCafe.setId(object.getInt("id"));
@@ -141,9 +138,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
                                     }
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -153,7 +148,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
 
                     }
                 });
-            }
+
         }
     }
     public void checkPermission(){
@@ -176,9 +171,7 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
                                 .putString("ALLOWED", "1")
                                 .apply();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (JSONException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -192,13 +185,10 @@ public class MenuCafeService extends IntentService implements ConnectivityChange
     @Override
     public void onConnectionChange(ConnectivityEvent event) {
         if(event.getState().getValue() == ConnectivityState.CONNECTED){
-            // device has active internet connection
             encryptedPreferences.edit()
                     .putString("NETWORK", "1")
                     .apply();
-        }
-        else{
-            // there is no active internet connection on this device
+        }else{
             encryptedPreferences.edit()
                     .putString("NETWORK", "0")
                     .apply();
