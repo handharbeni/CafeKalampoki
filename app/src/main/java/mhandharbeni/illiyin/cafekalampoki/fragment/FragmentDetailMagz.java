@@ -74,8 +74,10 @@ public class FragmentDetailMagz extends Fragment {
         snappingRecyclerView.setAdapter(adapter);
     }
     public void initData(int idMagz){
+        Log.d("DETAIL MAGZ", "IdinitData: "+idMagz);
         dataModels= new ArrayList<>();
         RealmResults<DetailMagz> resultDetail = dmgHelper.getDetailMagz(idMagz);
+        Log.d("DETAIL MAGZ", "Total initData: "+resultDetail.size());
         if(resultDetail.size() > 0){
             for (int i=0;i<resultDetail.size();i++){
                 Log.d("DETAIL MAGZ", "initData: "+resultDetail.get(i).getFoto());

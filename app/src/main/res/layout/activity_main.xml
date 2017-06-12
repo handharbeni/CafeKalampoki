@@ -5,8 +5,29 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
-
     <RelativeLayout
+        android:id="@+id/layoutStarter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_home"/>
+
+        <Button
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/btnEnter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="113dp"
+            android:text="ENTER" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layoutMains"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -20,6 +41,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
+            android:background="@android:color/darker_gray"
             android:id="@+id/drawer_layout"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"

@@ -12,10 +12,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
@@ -72,6 +74,7 @@ public class FragmentListOrder extends Fragment implements ConnectivityChangeLis
     protected static final int REFRESH = 0;
 
     private Handler _hRedraw;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         oh = new OrderHelper(getActivity().getApplicationContext());
@@ -120,10 +123,13 @@ public class FragmentListOrder extends Fragment implements ConnectivityChangeLis
         };
         return v;
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void redrawEverything()
     {
+        tableLayout.removeAllViews();
         tableLayout.invalidate();
         tableLayout.refreshDrawableState();
+        initHeader();
 //        initData();
     }
     public void showSnackBar(String message){
@@ -143,25 +149,37 @@ public class FragmentListOrder extends Fragment implements ConnectivityChangeLis
                 })
                 .show();
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void initHeader(){
+        TableRow tableRow = new TableRow(getActivity());
+        TextView txtNamaMenu = new TextView(getActivity());
+        TextView txtJumlahMenu = new TextView(getActivity());
+        TextView txtHargaMenu = new TextView(getActivity());
+        txtNamaMenu.setText("Nama");
+        txtNamaMenu.setTextColor(getResources().getColor(R.color.black));
+        txtNamaMenu.setWidth(83);
+        txtNamaMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        txtJumlahMenu.setText("Jumlah");
+        txtJumlahMenu.setTextColor(getResources().getColor(R.color.black));
+        txtJumlahMenu.setWidth(83);
+        txtJumlahMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        txtHargaMenu.setText("Harga");
+        txtHargaMenu.setTextColor(getResources().getColor(R.color.black));
+        txtHargaMenu.setWidth(83);
+        txtHargaMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tableRow.addView(txtNamaMenu);
+        tableRow.addView(txtJumlahMenu);
+        tableRow.addView(txtHargaMenu);
+        tableRow.setGravity(Gravity.CENTER);
+        tableLayout.setGravity(Gravity.CENTER);
+        tableLayout.addView(tableRow);
+
+    }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void initData(){
-//        tableLayout.removeAllViews();
         RealmResults<Order> results = oh.getOrder();
-//        TableRow tableRowHeader = new TableRow(getActivity());
-//        tableRowHeader.setPadding(0, 5, 0, 0);
-//        tableRowHeader.setDividerPadding(2);
-//        TextView txtNama= new TextView(getActivity());
-//        txtNama.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//        TextView txtJumlah= new TextView(getActivity());
-//        txtJumlah.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//        TextView txtHarga= new TextView(getActivity());
-//        txtHarga.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//        txtNama.setText("NAMA");
-//        txtJumlah.setText(String.valueOf("JUMLAH"));
-//        txtHarga.setText(String.valueOf("HARGA"));
-//        tableRowHeader.addView(txtNama);
-//        tableRowHeader.addView(txtJumlah);
-//        tableRowHeader.addView(txtHarga);
-//        tableLayout.addView(tableRowHeader);
         if(results.size() > 0){
             for (int i = 0;i<results.size();i++){
                 TableRow tableRow = new TableRow(getActivity());
@@ -169,8 +187,23 @@ public class FragmentListOrder extends Fragment implements ConnectivityChangeLis
                 TextView txtJumlahMenu = new TextView(getActivity());
                 TextView txtHargaMenu = new TextView(getActivity());
                 txtNamaMenu.setText(results.get(i).getNama());
+                txtNamaMenu.setTextColor(getResources().getColor(R.color.black));
+                txtNamaMenu.setWidth(83);
+                txtNamaMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
                 txtJumlahMenu.setText(String.valueOf(results.get(i).getJumlah()));
+                txtJumlahMenu.setTextColor(getResources().getColor(R.color.black));
+                txtJumlahMenu.setWidth(83);
+                txtJumlahMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
                 txtHargaMenu.setText(String.valueOf(results.get(i).getHarga()));
+                txtHargaMenu.setTextColor(getResources().getColor(R.color.black));
+                txtHargaMenu.setWidth(83);
+                txtHargaMenu.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                tableRow.setGravity(Gravity.CENTER);
+                tableLayout.setGravity(Gravity.CENTER);
+
                 tableRow.addView(txtNamaMenu);
                 tableRow.addView(txtJumlahMenu);
                 tableRow.addView(txtHargaMenu);

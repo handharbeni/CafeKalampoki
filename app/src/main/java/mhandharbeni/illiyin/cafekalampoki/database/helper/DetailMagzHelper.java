@@ -45,7 +45,8 @@ public class DetailMagzHelper {
     }
 
     public RealmResults<DetailMagz> getDetailMagz(int idMagz) {
-        realmResult = realm.where(DetailMagz.class).equalTo("id_magz", idMagz).findAll();
+        DetailMagz dm = new DetailMagz();
+        realmResult = realm.where(DetailMagz.class).equalTo("id_magz", String.valueOf(idMagz)).findAll();
         return realmResult;
     }
 

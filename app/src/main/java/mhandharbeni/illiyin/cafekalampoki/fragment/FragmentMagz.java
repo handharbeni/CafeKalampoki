@@ -104,7 +104,8 @@ public class FragmentMagz  extends Fragment {
     public void initData(){
         dataModels= new ArrayList<>();
         RealmResults<Magz> results = mgHelper.getMagz();
-        Log.d("MAGZ FRAGMENT", "initData: "+results.size());
+        Log.d("MAGZ FRAGMENT", "Total " +
+                "initData: "+results.size());
         if (results.size() > 0){
             for (int i=0;i<results.size();i++){
                 dataModels.add(new MagzModel(results.get(i).getId(),

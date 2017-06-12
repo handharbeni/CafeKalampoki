@@ -2,15 +2,45 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginTop="55dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.dant.centersnapreyclerview.SnappingRecyclerView
-        android:id="@+id/rcSnap"
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/imgHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/bg_home_nyuntek" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/text_home"
+        android:layout_marginTop="105dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="8sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:orientation="horizontal"
-        app:anchor="center"
+        android:text="@string/deskripsi"
+        android:layout_marginBottom="18dp"
+        android:layout_above="@+id/imageView"
+        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_kalam"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:id="@+id/imageView" />
 </RelativeLayout>

@@ -61,7 +61,7 @@ public class DetailMagzService extends IntentService implements ConnectivityChan
         //httppizza
         dmgHelper = new DetailMagzHelper(getApplicationContext());
         mgHelper = new MagzHelper(getApplicationContext());
-        endUri = getString(R.string.server)+"/"+getString(R.string.vServer)+"//detMagz.php?id=";
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -80,11 +80,15 @@ public class DetailMagzService extends IntentService implements ConnectivityChan
                 final Realm realms = Realm.getDefaultInstance();
                 RealmResults<Magz> mainMagz =
                         realms.where(Magz.class).findAll();
+                Log.d("DETAIL MAGZ", "sycnDetMagz: size "+mainMagz.size());
                 if (mainMagz.size() > 0){
                     /*AMBIL DATA*/
                     for (int i=0;i<mainMagz.size();i++){
+                        endUri = getString(R.string.server)+"/"+getString(R.string.vServer)+"//detMagz.php?id=";
+                        Log.d("DETAIL MAGZ", "sycnDetMagz: id "+mainMagz.get(i).getId());
                         int id = mainMagz.get(i).getId();
                         endUri = endUri+String.valueOf(id);
+                        Log.d("DETAIL MAGZ", "sycnDetMagz: endUri"+endUri);
                         Request request = client.newRequest()
                                 .url(endUri)
                                 .get()
@@ -102,11 +106,12 @@ public class DetailMagzService extends IntentService implements ConnectivityChan
                                                 JSONObject jsonSecond = jsonArray.getJSONObject(j);
                                                 int idDetail = jsonSecond.getInt("id");
                                                 if(!dmgHelper.checkDuplicate(idDetail)){
+                                                    Log.d("RESPONSE DETAIL", "RESPONSE DETAIL onResponse: "+jsonSecond.getString("kd_magz"));
                                                     int idMagz = jsonSecond.getInt("kd_magz");;
                                                     String gambar = jsonSecond.getString("foto");
                                                     DetailMagz detailMagz = new DetailMagz();
                                                     detailMagz.setId(idDetail);
-                                                    detailMagz.setId_magz(idMagz);
+                                                    detailMagz.setId_magz(jsonSecond.getString("kd_magz"));
                                                     detailMagz.setFoto(gambar);
                                                     dmgHelper.addDetail(detailMagz);
                                                 }
@@ -125,7 +130,7 @@ public class DetailMagzService extends IntentService implements ConnectivityChan
                     }
                     /*AMBIL DATA*/
                 }
-                realms.close();
+//                realms.close();
             }
         }
     }

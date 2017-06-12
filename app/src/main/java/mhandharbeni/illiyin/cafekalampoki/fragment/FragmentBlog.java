@@ -1,5 +1,6 @@
 package mhandharbeni.illiyin.cafekalampoki.fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class FragmentBlog  extends Fragment {
     View v;
     String kategori;
     BlogHelper bHelper;
+    ImageView icBgBlog;
 
 
     @Override
@@ -41,6 +43,7 @@ public class FragmentBlog  extends Fragment {
         bHelper = new BlogHelper(getActivity().getApplicationContext());
         v = inflater.inflate(R.layout.fragmet_blog, container, false);
         snappingRecyclerView = (SnappingRecyclerView) v.findViewById(R.id.snapRC);
+        icBgBlog = (ImageView) v.findViewById(R.id.icBgBlog);
         Bundle args = getArguments();
         kategori = args.getString("kategori");
         initData(kategori);
@@ -120,12 +123,15 @@ public class FragmentBlog  extends Fragment {
     }
     public void initData(String kategori){
         String sKategori = "HAPPENING";
+        icBgBlog.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if (kategori.equalsIgnoreCase("1")){
             /*HAPPENING*/
             sKategori = "HAPPENING";
+            icBgBlog.setBackground(getResources().getDrawable(R.drawable.ic_happening_bg));
         }else if(kategori.equalsIgnoreCase("2")){
             /*INSIDE*/
             sKategori = "INSIDE";
+            icBgBlog.setBackground(getResources().getDrawable(R.drawable.ic_inside_bg));
         }
         RealmResults<Blog> resultBlog = bHelper.getBlog(Integer.valueOf(kategori));
         Log.d("FRAGMENT BLOG", "initData: "+resultBlog.size());

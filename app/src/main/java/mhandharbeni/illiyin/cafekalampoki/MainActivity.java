@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.golovin.fluentstackbar.FluentSnackbar;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
     VersiDBHelper vDB;
     MenuHelper mh;
     TextView txtTitle;
+    RelativeLayout layoutStarter, layoutMain;
+    Button btnEnter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +88,33 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbarDefault);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
+        layoutStarter = (RelativeLayout) findViewById(R.id.layoutStarter);
+        layoutMain = (RelativeLayout) findViewById(R.id.layoutMains);
+        btnEnter = (Button) findViewById(R.id.btnEnter);
         String[] menu =  getResources().getStringArray(R.array.menu);
         initDB();
+        startLayout();
+    }
+    public void hideAll(){
+        layoutMain.setVisibility(View.GONE);
+        layoutMain.setVisibility(View.GONE);
+    }
+    public void startLayout(){
+        hideAll();
+        layoutStarter.setVisibility(View.VISIBLE);
+        btnEnter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextLayout();
+            }
+        });
+    }
+    public void nextLayout(){
+        hideAll();
         initSideBar();
+        Fragment localFragment = new FragmentHome();
+        changeFragment(localFragment);
+        layoutMain.setVisibility(View.VISIBLE);
     }
     public void showSnackBar(String message){
         mFluentSnackbar = FluentSnackbar.create(this);
@@ -320,11 +348,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityChang
     public void initSideBar(){
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
+                .withTranslucentNavigationBar(true)
+                .withSliderBackgroundColor(getResources().getColor(android.R.color.darker_gray))
                 .withRootView(R.id.drawer_layout)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
                 .withActionBarDrawerToggleAnimated(true)
-                .withSelectedItem(-1)
+                .withSelectedItem(0)
                 .withFireOnInitialOnClick(false)
                 .withOnDrawerItemClickListener(this)
                 .withFooter(R.layout.footer)

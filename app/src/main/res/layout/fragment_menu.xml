@@ -8,7 +8,7 @@
         android:id="@+id/menuFood"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:background="@drawable/bg_food"
+        android:background="@drawable/foods"
         android:orientation="vertical"
         android:layout_weight="1">
     </LinearLayout>
@@ -17,7 +17,7 @@
         android:id="@+id/menuBeverage"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:background="@drawable/bg_beverages"
+        android:background="@drawable/beverages"
         android:orientation="vertical"
         android:layout_weight="1">
     </LinearLayout>

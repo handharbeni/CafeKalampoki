@@ -154,7 +154,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:src="@drawable/common_google_signin_btn_icon_dark" />
+                    android:src="@drawable/icon_kalam" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
