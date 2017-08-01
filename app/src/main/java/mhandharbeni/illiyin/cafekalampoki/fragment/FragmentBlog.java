@@ -127,11 +127,13 @@ public class FragmentBlog  extends Fragment {
         if (kategori.equalsIgnoreCase("1")){
             /*HAPPENING*/
             sKategori = "HAPPENING";
-            icBgBlog.setBackground(getResources().getDrawable(R.drawable.ic_happening_bg));
+//            icBgBlog.setImageResource(R.drawable.ic_happening_bg);
+            Glide.with(getActivity().getApplicationContext()).load("").placeholder(R.drawable.ic_happening_bg).into(icBgBlog);
         }else if(kategori.equalsIgnoreCase("2")){
             /*INSIDE*/
             sKategori = "INSIDE";
-            icBgBlog.setBackground(getResources().getDrawable(R.drawable.ic_inside_bg));
+            Glide.with(getActivity().getApplicationContext()).load("").placeholder(R.drawable.ic_inside_bg).into(icBgBlog);
+//            icBgBlog.setImageResource(getResources().getDrawable(R.drawable.ic_inside_bg));
         }
         RealmResults<Blog> resultBlog = bHelper.getBlog(Integer.valueOf(kategori));
         Log.d("FRAGMENT BLOG", "initData: "+resultBlog.size());

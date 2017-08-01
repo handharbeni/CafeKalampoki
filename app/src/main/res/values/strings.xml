@@ -5,7 +5,7 @@
         <item>Menu2</item>
         <item>Menu3</item>
     </array>
-    <string name="server">http://192.168.1.100/server-kalampoki</string>
+    <string name="server">http://192.168.1.13/server-kalampoki</string>
     <string name="key">BENI@@#QWD@</string>
     <string name="permission">https://accesspermission.herokuapp.com/</string>
     <string name="vServer"></string>
@@ -23,4 +23,10 @@ said that Kalampoki Quayhouse is a brand new indies corner.\n
 Whatever it is, a meeting point, creative joint, meals dealer,\n
 caffeine provider, you name it!</string>
     <string name="captionmagz">Reading,\nGood for you\nto feed your brain</string>
+    <string name="keep">Keep in Touch \nwith us</string>
+    <string name="cases">"In case, if you need to quay\n or may be you wanna ask something, just call us"</string>
+    <string name="address">Come quay\nto\nJl. Bukit Barisan 12, Malang, East Java\n\n/ Open Everyday /\n18.00 &#8211; 24.00</string>
+    <string name="scan">or just scan this barcode\nfor our line</string>
+    <string name="visit">also visit\nkalampokiquayhouse.tumblr.com</string>
+
 </resources>

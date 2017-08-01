@@ -10,7 +10,7 @@
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/ic_inside_bg"/>
+            android:src="@drawable/ic_inside_bg"/>
         <RelativeLayout
             android:paddingTop="30dp"
             android:paddingLeft="25dp"
